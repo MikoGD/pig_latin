@@ -3,19 +3,6 @@ Program description: Convert text to pig latin. This is when the first consonant
   is moved to the end of the word and appending "ay".
   Example, first -> irst-fay. For words that have a vowel for the first letter
   you append "hay" to the end. For example apple -> appple-hay.
-
-TODO:
-- Functions:
-  x Display_menu()
-  x get_menu_option()
-  x get_sentence() -> Sentence
-  x get_words(String) -> Vec<String>
-  ~ convert_sentence(Vec<String>) -> Vec<String>
-  x is_vowel(char) -> bool
-  x display_sentence(&Vec<String>)
-FIXME:
-- convert_sentence() not converting properly
-
 */
 use std::io::{self, prelude::*};
 
@@ -146,12 +133,16 @@ fn get_words(sentence: String) -> Vec<String> {
         let mut punctuation_index: usize = 0;
         for (index, character) in word.chars().enumerate() {
             let character = character as u32;
-            if (character > 96 && character < 123) || (character > 64 && character < 91) {
+            if (character > 96 && character < 123)
+                || (character > 64 && character < 91)
+                || (character == 44 || character == 39)
+            {
                 continue;
             } else {
                 punctuation_index = index;
             }
         }
+        println!("word: {}, punctuation_index: {}", word, punctuation_index);
 
         if punctuation_index > 0 {
             words.push(word[0..punctuation_index].to_string());
